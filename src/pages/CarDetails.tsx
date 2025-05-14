@@ -5,6 +5,8 @@ import { Calendar, Info, Car as CarIcon } from 'lucide-react';
 
 export default function CarDetails() {
   const { id } = useParams();
+  const [startDate, setStartDate] = useState("");
+  const [endDate, setEndDate] = useState("");
   const [showContactForm, setShowContactForm] = useState(false);
   const [formData, setFormData] = useState({
     name: '',
@@ -121,6 +123,33 @@ export default function CarDetails() {
                     className="w-full border rounded-md p-2"
                     value={formData.phone}
                     onChange={(e) => setFormData({...formData, phone: e.target.value})}
+                  />
+                </div>
+                <div className="mb-4">
+                  <label htmlFor="startDate" className="block text-sm font-medium text-gray-700">
+                    Data początkowa
+                  </label>
+                  <input
+                    type="date"
+                    id="startDate"
+                    name="startDate"
+                    value={startDate}
+                    onChange={(e) => setStartDate(e.target.value)}
+                    className="mt-1 block w-full rounded-md border-gray-300 shadow-sm"
+                  />
+                </div>
+
+                <div className="mb-4">
+                  <label htmlFor="endDate" className="block text-sm font-medium text-gray-700">
+                    Data końcowa
+                  </label>
+                  <input
+                    type="date"
+                    id="endDate"
+                    name="endDate"
+                    value={endDate}
+                    onChange={(e) => setEndDate(e.target.value)}
+                    className="mt-1 block w-full rounded-md border-gray-300 shadow-sm"
                   />
                 </div>
                 <div>
