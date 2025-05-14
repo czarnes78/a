@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Car, UserCircle, Phone, Home } from 'lucide-react';
@@ -28,7 +29,7 @@ export default function Navbar() {
               <span>Kontakt</span>
             </Link>
             <Link 
-              to="/login" 
+              to="/admin-login" 
               className="bg-white text-blue-600 px-4 py-2 rounded-md hover:bg-blue-50 transition-colors"
             >
               Logowanie

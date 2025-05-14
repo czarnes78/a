@@ -1,6 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import { cars } from '../data/cars';
 import { Calendar, Info, Car as CarIcon } from 'lucide-react';
 
 export default function CarDetails() {
@@ -14,19 +13,41 @@ export default function CarDetails() {
     phone: '',
     message: '',
   });
+  const [car, setCar] = useState<any>(null);
 
-  const car = cars.find(c => c.id === Number(id));
+  useEffect(() => {
+    fetch(`http://localhost:4000/api/cars/${id}`)
+      .then(res => res.json())
+      .then(data => setCar(data))
+      .catch(err => console.error('Błąd pobierania auta:', err));
+  }, [id]);
 
   if (!car) {
-    return <div>Nie znaleziono samochodu</div>;
+    return <div className="p-8 text-gray-600">Wczytywanie danych samochodu...</div>;
   }
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // Handle form submission
-    console.log('Form submitted:', formData);
-    setShowContactForm(false);
-    alert('Dziękujemy za zapytanie. Skontaktujemy się z Państwem wkrótce.');
+
+    const newRequest = {
+      ...formData,
+      startDate,
+      endDate,
+      carId: car.id,
+      carName: car.name
+    };
+
+    try {
+      await fetch('http://localhost:4000/api/reservations', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(newRequest)
+      });
+      setShowContactForm(false);
+      alert('Dziękujemy za zapytanie. Skontaktujemy się z Państwem wkrótce.');
+    } catch (error) {
+      console.error('Błąd podczas wysyłania formularza:', error);
+    }
   };
 
   return (
@@ -39,10 +60,10 @@ export default function CarDetails() {
             className="w-full h-96 object-cover rounded-lg"
           />
         </div>
-        
+
         <div>
           <h1 className="text-3xl font-bold mb-4">{car.name}</h1>
-          
+
           <div className="grid grid-cols-2 gap-4 mb-6">
             <div className="flex items-center space-x-2">
               <CarIcon className="h-5 w-5 text-blue-600" />
@@ -61,7 +82,7 @@ export default function CarDetails() {
           <div className="mb-6">
             <h2 className="text-xl font-semibold mb-2">Wyposażenie:</h2>
             <ul className="grid grid-cols-2 gap-2">
-              {car.features.map((feature, index) => (
+              {car.features.map((feature: string, index: number) => (
                 <li key={index} className="flex items-center space-x-2">
                   <span className="w-2 h-2 bg-blue-600 rounded-full"></span>
                   <span>{feature}</span>
@@ -102,7 +123,7 @@ export default function CarDetails() {
                     required
                     className="w-full border rounded-md p-2"
                     value={formData.name}
-                    onChange={(e) => setFormData({...formData, name: e.target.value})}
+                    onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                   />
                 </div>
                 <div>
@@ -112,7 +133,7 @@ export default function CarDetails() {
                     required
                     className="w-full border rounded-md p-2"
                     value={formData.email}
-                    onChange={(e) => setFormData({...formData, email: e.target.value})}
+                    onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                   />
                 </div>
                 <div>
@@ -122,7 +143,7 @@ export default function CarDetails() {
                     required
                     className="w-full border rounded-md p-2"
                     value={formData.phone}
-                    onChange={(e) => setFormData({...formData, phone: e.target.value})}
+                    onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
                   />
                 </div>
                 <div className="mb-4">
@@ -159,7 +180,7 @@ export default function CarDetails() {
                     className="w-full border rounded-md p-2"
                     rows={4}
                     value={formData.message}
-                    onChange={(e) => setFormData({...formData, message: e.target.value})}
+                    onChange={(e) => setFormData({ ...formData, message: e.target.value })}
                   ></textarea>
                 </div>
                 <div className="flex justify-end space-x-4">

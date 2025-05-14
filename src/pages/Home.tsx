@@ -1,12 +1,19 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { cars } from '../data/cars';
 import { Car, CarSegment, CarType } from '../types';
 
 export default function Home() {
+  const [cars, setCars] = useState<Car[]>([]);
   const [segment, setSegment] = useState<CarSegment | ''>('');
   const [type, setType] = useState<CarType | ''>('');
   const [childSeat, setChildSeat] = useState(false);
+
+  useEffect(() => {
+    fetch('http://localhost:4000/api/cars')
+      .then(res => res.json())
+      .then(data => setCars(data))
+      .catch(err => console.error('Błąd ładowania aut:', err));
+  }, []);
 
   const filteredCars = cars.filter(car => {
     if (segment && car.segment !== segment) return false;
@@ -20,7 +27,7 @@ export default function Home() {
       {/* Sidebar Filters */}
       <div className="w-72 bg-white rounded-lg shadow-md p-6 h-fit sticky top-4">
         <h2 className="text-xl font-semibold mb-6">Filtry</h2>
-        
+
         <div className="space-y-6">
           <div>
             <h3 className="font-medium mb-3">Segment</h3>
