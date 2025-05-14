@@ -117,3 +117,27 @@ app.get('/api/reservations/history', (req, res) => {
 app.listen(PORT, () => {
   console.log(`Serwer działa na http://localhost:${PORT}`);
 });
+
+app.delete('/api/reservations/history/:timestamp', (req, res) => {
+  const timestamp = req.params.timestamp;
+  reservationHistory = reservationHistory.filter(r => r.timestamp !== timestamp);
+  res.status(200).json({ message: 'Usunięto z historii' });
+});
+
+app.post('/api/cars', (req, res) => {
+  const newCar = {
+    ...req.body,
+    id: cars.length ? cars[cars.length - 1].id + 1 : 1,
+  };
+  cars.push(newCar);
+  res.status(201).json({ message: 'Samochód dodany', car: newCar });
+});
+
+app.post('/api/cars', (req, res) => {
+  const newCar = {
+    ...req.body,
+    id: cars.length > 0 ? cars[cars.length - 1].id + 1 : 1,
+  };
+  cars.push(newCar);
+  res.status(201).json({ message: 'Samochód dodany', car: newCar });
+});

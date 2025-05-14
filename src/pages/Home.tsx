@@ -7,6 +7,13 @@ export default function Home() {
   const [segment, setSegment] = useState<CarSegment | ''>('');
   const [type, setType] = useState<CarType | ''>('');
   const [childSeat, setChildSeat] = useState(false);
+  const [reservationHistory, setReservationHistory] = useState([]);
+
+  useEffect(() => {
+    fetch('http://localhost:4000/api/reservations/history')
+      .then((res) => res.json())
+      .then((data) => setReservationHistory(data));
+  }, []);
 
   useEffect(() => {
     fetch('http://localhost:4000/api/cars')
@@ -21,6 +28,16 @@ export default function Home() {
     if (childSeat && !car.childSeat) return false;
     return true;
   });
+
+  const isCarReservedNow = (carId: number) => {
+  const now = new Date();
+  return reservationHistory.some(r => 
+    r.carId === carId &&
+    r.action === 'accept' &&
+    new Date(r.startDate) <= now &&
+    now <= new Date(r.endDate)
+    );
+  };
 
   return (
     <div className="flex">
@@ -121,8 +138,15 @@ export default function Home() {
                 <img
                   src={car.image}
                   alt={car.name}
-                  className="w-full h-full object-cover"
+                  className={`w-full h-full object-cover transition-opacity duration-300 ${
+                    isCarReservedNow(car.id) ? 'opacity-40 grayscale' : ''
+                  }`}
                 />
+                {isCarReservedNow(car.id) && (
+                  <div className="absolute inset-0 flex items-center justify-center text-white font-bold text-xl bg-black bg-opacity-30">
+                    Niedostępne
+                  </div>
+                )}
               </div>
               <div className="p-4">
                 <h3 className="text-xl font-semibold mb-2">{car.name}</h3>
