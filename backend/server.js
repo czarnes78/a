@@ -1,113 +1,119 @@
-// backend/server.js
 const express = require('express');
 const cors = require('cors');
+const bodyParser = require('body-parser');
+const nodemailer = require('nodemailer');
+
 const app = express();
 const PORT = 4000;
 
 app.use(cors());
-app.use(express.json());
-
-let requests = []; // 🧠 tymczasowa baza danych w RAM
+app.use(bodyParser.json());
 
 let cars = [
-    {
+  {
     id: 1,
     name: 'Fiat 500',
-    segment: 'KLASA A',
+    segment: 'klasa a',
     type: 'hatchback',
-    image: 'https://stellantis3.dam-broadcast.com/medias/domain12808/media108037/2411333-wq6afnhq5s-whr.jpg',
-    price: 200,
-    features: ['Klimatyzacja', 'Bluetooth', 'USB'],
-    mileage: 30000,
-    engine: '1.0 Hybrid 70KM',
-    year: 2021,
+    mileage: 45000,
+    engine: '1.2 Benzyna',
+    year: 2020,
     childSeat: true,
-    description: 'Stylowy maluch idealny do miasta.'
+    features: ['Klimatyzacja', 'Bluetooth', 'USB'],
+    description: 'Małe miejskie auto idealne na codzienne dojazdy.',
+    price: 200,
+    image: 'https://api.pgd.pl/uploads_fiat/Models/Nowy-Fiat-500/500_Hatchback_Icon.jpg'
   },
   {
     id: 2,
     name: 'Toyota Aygo X',
-    segment: 'KLASA A',
+    segment: 'klasa a',
     type: 'crossover',
-    image: 'https://scene7.toyota.eu/is/image/toyotaeurope/Aygo-zalety_foto_PL_1280x1277_1?wid=1280&fit=fit,1&ts=0&resMode=sharp2&op_usm=1.75,0.3,2,0',
-    price: 200,
-    features: ['Kamera cofania', 'Apple CarPlay', 'Klimatyzacja'],
-    mileage: 15000,
-    engine: '1.0 VVT-i 72KM',
-    year: 2023,
-    childSeat: true,
-    description: 'Kompaktowy crossover do miejskich przygód.'
-  },
-  {
-    id: 3,
-    name: 'Hyundai i10',
-    segment: 'KLASA A',
-    type: 'hatchback',
-    image: 'https://www.autocentrum.pl/MjAyMy5qYgsgGztKGgpvH2NDb1ZUEmAMKBUoVlYQP0c3HD8KXB4jRXdNLE8MFXxddUkvSVYQfQt2GHxPAkB7WG4RNAxbFSwDbBB8SRgYJANsESwNVhkvCyISYB9UEigGKB85EFsWYFtsSWAURRhgXHYSIFQBSCYdbBYpVAdBf1lvEz0eFww',
-    price: 200,
-    features: ['Klimatyzacja', 'Bluetooth', 'Czujniki parkowania'],
-    mileage: 25000,
-    engine: '1.2 MPI 84KM',
+    mileage: 23000,
+    engine: '1.0 Benzyna',
     year: 2022,
-    childSeat: true,
-    description: 'Zwrotny i ekonomiczny – idealny na codzienne dojazdy.'
-  },
-  {
-    id: 4,
-    name: 'Volkswagen up!',
-    segment: 'KLASA A',
-    type: 'hatchback',
-    image: 'https://www.autocentrum.pl/OWRkLmpwYDYzCTpeXwxtInBRbkIRFGIxOwcpQhMWPXokDj4eGRgheGcIKFlARHxlMVx4D0NCejVlXngPRE4rM3wBPApSCg',
+    childSeat: false,
+    features: ['Kamera cofania', 'Apple CarPlay'],
+    description: 'Nowoczesny crossover dla wymagających.',
     price: 200,
-    features: ['Klimatyzacja', 'AUX', 'System multimedialny'],
-    mileage: 40000,
-    engine: '1.0 75KM',
-    year: 2021,
-    childSeat: true,
-    description: 'Oszczędny miejski samochód.'
-  },
-  {
-    id: 5,
-    name: 'Kia Picanto',
-    segment: 'KLASA A',
-    type: 'hatchback',
-    image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT_jeZSj0TczecTgqABLjcIFV2sa_0jspWAYQ&s',
-    price: 200,
-    features: ['Bluetooth', 'Tempomat', 'Kamera cofania'],
-    mileage: 20000,
-    engine: '1.0 T-GDi 100KM',
-    year: 2022,
-    childSeat: true,
-    description: 'Mały, ale z charakterem.'
-  },
-]
+    image: 'https://www.toyotanews.eu/images/rrrcontent/articles/article_1013_1013_S1hFdAFC.jpg'
+  }
+];
 
-// Zwraca wszystkie auta
+let reservations = [];
+let reservationHistory = [];
+
+const transporter = nodemailer.createTransport({
+  service: 'gmail',
+  auth: {
+    user: 'ticketpoczta01@gmail.com',
+    pass: 'soba bkea iaty rjeq'
+  }
+});
+
+function sendDecisionEmail(email, name, carName, action) {
+  const subject = action === 'accept' ? 'Rezerwacja zatwierdzona' : 'Rezerwacja odrzucona';
+  const text = action === 'accept'
+    ? `Dzień dobry ${name},\n\nTwoja rezerwacja samochodu ${carName} została zaakceptowana.`
+    : `Dzień dobry ${name},\n\nNiestety nie możemy zrealizować Twojej rezerwacji samochodu ${carName}.`;
+
+  const mailOptions = {
+    from: 'twojemail@gmail.com',
+    to: email,
+    subject,
+    text
+  };
+
+  transporter.sendMail(mailOptions, (error, info) => {
+    if (error) {
+      return console.error('Błąd przy wysyłce maila:', error);
+    }
+    console.log('Email wysłany:', info.response);
+  });
+}
+
 app.get('/api/cars', (req, res) => {
   res.json(cars);
 });
 
-// Zwraca jedno auto po ID
 app.get('/api/cars/:id', (req, res) => {
-  const car = cars.find((c) => c.id === parseInt(req.params.id));
-  if (car) {
-    res.json(car);
-  } else {
-    res.status(404).json({ message: 'Nie znaleziono auta' });
-  }
+  const id = parseInt(req.params.id);
+  const car = cars.find(c => c.id === id);
+  if (!car) return res.status(404).send('Nie znaleziono auta');
+  res.json(car);
 });
 
 app.post('/api/reservations', (req, res) => {
-  const data = req.body;
-  data.timestamp = new Date().toISOString();
-  requests.push(data);
-  res.status(201).json({ message: 'Zapytanie zapisane' });
+  const reservation = { ...req.body, timestamp: new Date().toISOString() };
+  reservations.push(reservation);
+  res.status(201).json({ message: 'Zarejestrowano zapytanie' });
 });
 
 app.get('/api/reservations', (req, res) => {
-  res.json(requests);
+  res.json(reservations);
+});
+
+app.post('/api/reservations/archive', (req, res) => {
+  const { action, originalTimestamp, ...rest } = req.body;
+
+  reservationHistory.push({
+    ...rest,
+    action,
+    timestamp: new Date().toISOString()
+  });
+
+  reservations = reservations.filter(r => r.timestamp !== originalTimestamp);
+
+  // Wyślij e-mail z decyzją
+  sendDecisionEmail(rest.email, rest.name, rest.carName, action);
+
+  res.status(200).json({ message: 'Zarchiwizowano i wysłano e-mail' });
+});
+
+app.get('/api/reservations/history', (req, res) => {
+  res.json(reservationHistory);
 });
 
 app.listen(PORT, () => {
-  console.log(`Backend działa na http://localhost:${PORT}`);
+  console.log(`Serwer działa na http://localhost:${PORT}`);
 });

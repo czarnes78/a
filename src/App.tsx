@@ -11,6 +11,8 @@ import AdminLogin from './pages/AdminLogin'; // ścieżka zależna od repo
 import AdminPanel from './pages/AdminPanel';
 import AdminRequests from './pages/AdminRequests';
 import ProtectedRoute from './components/ProtectedRoute';
+import AdminHistory from './pages/AdminHistory';
+
 
 
 function App() {
@@ -30,6 +32,8 @@ function App() {
               <Route path="/admin" element={<AdminPanel />} />
               <Route path="/admin" element={<ProtectedRoute><AdminPanel /></ProtectedRoute>} />
               <Route path="/admin/requests" element={<ProtectedRoute><AdminRequests /></ProtectedRoute>} />
+              <Route path="/admin/requests" element={<AdminRequests />} />
+              <Route path="/admin/history" element={<AdminHistory />} />
             </Routes>
           </main>
         </div>
