@@ -1,5 +1,5 @@
 // src/auth/AdminAuthContext.tsx
-import React, { createContext, useContext, useState, ReactNode } from 'react';
+import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
 
 interface AuthContextType {
   isAdmin: boolean;
@@ -12,15 +12,27 @@ const AdminAuthContext = createContext<AuthContextType | undefined>(undefined);
 export const AdminAuthProvider = ({ children }: { children: ReactNode }) => {
   const [isAdmin, setIsAdmin] = useState(false);
 
-  const login = (password: string) => {
-    if (password === 'admin123') { // 🔐 zmień na bezpieczne później
+  // 🔁 Przy pierwszym załadowaniu sprawdź localStorage
+  useEffect(() => {
+    const storedAdmin = localStorage.getItem('isAdmin');
+    if (storedAdmin === 'true') {
       setIsAdmin(true);
+    }
+  }, []);
+
+  const login = (password: string) => {
+    if (password === 'admin123') {
+      setIsAdmin(true);
+      localStorage.setItem('isAdmin', 'true'); // 🔐 zapisz do localStorage
       return true;
     }
     return false;
   };
 
-  const logout = () => setIsAdmin(false);
+  const logout = () => {
+    setIsAdmin(false);
+    localStorage.removeItem('isAdmin'); // ❌ usuń z localStorage
+  };
 
   return (
     <AdminAuthContext.Provider value={{ isAdmin, login, logout }}>

@@ -1,6 +1,9 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
 
-export default function AddCar() {
+export default function EditCar() {
+  const { id } = useParams();
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     name: '',
     segment: '',
@@ -9,11 +12,29 @@ export default function AddCar() {
     engine: '',
     year: '',
     childSeat: false,
-    features: [],
+    features: [] as string[],
     description: '',
     price: '',
     image: '',
   });
+
+  const segmentOptions = ['klasa a', 'klasa b', 'klasa c', 'klasa d', 'klasa e', 'klasa f', 'klasa j'];
+  const typeOptions = ['sedan', 'suv', 'hatchback', 'kombi', 'van'];
+  const featureOptions = ['Nawigacja GPS', 'Automatyczna skrzynia', 'Bluetooth', 'Bagażnik dachowy'];
+
+  useEffect(() => {
+    fetch(`http://localhost:4000/api/cars/${id}`)
+      .then(res => res.json())
+      .then(data => {
+        setFormData({
+          ...data,
+          mileage: data.mileage.toString(),
+          year: data.year.toString(),
+          price: data.price.toString(),
+        });
+      })
+      .catch(err => console.error('Błąd ładowania auta:', err));
+  }, [id]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
     const { name, value, type, checked } = e.target;
@@ -34,37 +55,44 @@ export default function AddCar() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    const newCar = {
+    const updatedCar = {
       ...formData,
       mileage: Number(formData.mileage),
       year: Number(formData.year),
       price: Number(formData.price),
     };
 
-    const res = await fetch('http://localhost:4000/api/cars', {
-      method: 'POST',
+    const res = await fetch(`http://localhost:4000/api/cars/${id}`, {
+      method: 'PUT',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(newCar),
+      body: JSON.stringify(updatedCar),
     });
 
     if (res.ok) {
-      alert('Samochód dodany!');
-      setFormData({
-        name: '', segment: '', type: '', mileage: '', engine: '', year: '',
-        childSeat: false, features: [], description: '', price: '', image: ''
-      });
+      alert('Samochód zaktualizowany!');
+      navigate('/');
     } else {
-      alert('Błąd przy dodawaniu samochodu.');
+      alert('Błąd przy zapisie.');
     }
   };
 
-  const segmentOptions = ['klasa a', 'klasa b', 'klasa c', 'klasa d', 'klasa e', 'klasa f', 'klasa j'];
-  const typeOptions = ['sedan', 'suv', 'hatchback', 'kombi', 'van'];
-  const featureOptions = ['Nawigacja GPS', 'Automatyczna skrzynia', 'Bluetooth', 'Bagażnik dachowy'];
+  const handleDelete = async () => {
+    if (!window.confirm('Czy na pewno chcesz usunąć ten samochód?')) return;
+    const res = await fetch(`http://localhost:4000/api/cars/${id}`, {
+      method: 'DELETE',
+    });
+
+    if (res.ok) {
+      alert('Samochód usunięty.');
+      navigate('/');
+    } else {
+      alert('Błąd przy usuwaniu.');
+    }
+  };
 
   return (
     <div className="p-10 max-w-xl mx-auto">
-      <h2 className="text-3xl font-bold mb-8 text-center">Dodaj nowy samochód</h2>
+      <h2 className="text-3xl font-bold mb-8 text-center">Edytuj samochód</h2>
       <form onSubmit={handleSubmit} className="space-y-6 bg-white shadow p-6 rounded-lg">
         <div>
           <label className="block font-medium mb-1">Model</label>
@@ -128,9 +156,16 @@ export default function AddCar() {
           <label className="block font-medium mb-1">Link do zdjęcia</label>
           <input name="image" value={formData.image} onChange={handleChange} className="w-full border rounded p-2" />
         </div>
-        <div className="text-right">
+        <div className="flex justify-between">
           <button type="submit" className="bg-blue-600 text-white px-6 py-2 rounded hover:bg-blue-700">
-            Dodaj samochód
+            Zapisz zmiany
+          </button>
+          <button
+            type="button"
+            onClick={handleDelete}
+            className="bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700"
+          >
+            Usuń samochód
           </button>
         </div>
       </form>

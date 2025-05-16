@@ -1,19 +1,23 @@
 import React, { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import { Calendar, Info, Car as CarIcon } from 'lucide-react';
+import { useAdminAuth } from '../auth/AdminAuthContext';
 
 export default function CarDetails() {
   const { id } = useParams();
+  const navigate = useNavigate();
+  const { isAdmin } = useAdminAuth();
+
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
   const [showContactForm, setShowContactForm] = useState(false);
+  const [car, setCar] = useState<any>(null);
   const [formData, setFormData] = useState({
     name: '',
     email: '',
     phone: '',
     message: '',
   });
-  const [car, setCar] = useState<any>(null);
 
   useEffect(() => {
     fetch(`http://localhost:4000/api/cars/${id}`)
@@ -21,10 +25,6 @@ export default function CarDetails() {
       .then(data => setCar(data))
       .catch(err => console.error('Błąd pobierania auta:', err));
   }, [id]);
-
-  if (!car) {
-    return <div className="p-8 text-gray-600">Wczytywanie danych samochodu...</div>;
-  }
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -49,6 +49,10 @@ export default function CarDetails() {
       console.error('Błąd podczas wysyłania formularza:', error);
     }
   };
+
+  if (!car) {
+    return <div className="p-8 text-gray-600">Wczytywanie danych samochodu...</div>;
+  }
 
   return (
     <div className="bg-white rounded-lg shadow-md p-6">
@@ -96,16 +100,27 @@ export default function CarDetails() {
             <p className="text-gray-600">{car.description}</p>
           </div>
 
-          <div className="flex items-center justify-between">
+          <div className="flex items-center justify-between flex-wrap gap-2">
             <div className="text-3xl font-bold text-blue-600">
               {car.price} PLN/dzień
             </div>
-            <button
-              onClick={() => setShowContactForm(true)}
-              className="bg-blue-600 text-white px-6 py-3 rounded-md hover:bg-blue-700"
-            >
-              Zapytaj o dostępność
-            </button>
+            <div className="flex gap-2">
+              <button
+                onClick={() => setShowContactForm(true)}
+                className="bg-blue-600 text-white px-6 py-2 rounded-md hover:bg-blue-700"
+              >
+                Zapytaj o dostępność
+              </button>
+
+              {isAdmin && (
+                <button
+                  onClick={() => navigate(`/admin/edit-car/${car.id}`)}
+                  className="bg-yellow-500 text-white px-6 py-2 rounded-md hover:bg-yellow-600"
+                >
+                  Edytuj samochód
+                </button>
+              )}
+            </div>
           </div>
         </div>
       </div>
@@ -159,7 +174,6 @@ export default function CarDetails() {
                     className="mt-1 block w-full rounded-md border-gray-300 shadow-sm"
                   />
                 </div>
-
                 <div className="mb-4">
                   <label htmlFor="endDate" className="block text-sm font-medium text-gray-700">
                     Data końcowa

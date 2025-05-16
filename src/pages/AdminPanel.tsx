@@ -1,7 +1,14 @@
 import { useNavigate } from 'react-router-dom';
+import { useAdminAuth } from '../auth/AdminAuthContext';
 
 export default function AdminPanel() {
   const navigate = useNavigate();
+  const { logout } = useAdminAuth();
+
+  const handleLogout = () => {
+    logout(); // czyści stan + localStorage
+    navigate('/');
+  };
 
   return (
     <div className="text-center mt-12">
@@ -28,10 +35,7 @@ export default function AdminPanel() {
         </button>
         <button
           className="bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700"
-          onClick={() => {
-            localStorage.removeItem('isAdmin');
-            navigate('/');
-          }}
+          onClick={handleLogout}
         >
           Wyloguj
         </button>

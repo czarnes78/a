@@ -13,6 +13,7 @@ import AdminRequests from './pages/AdminRequests';
 import ProtectedRoute from './components/ProtectedRoute';
 import AdminHistory from './pages/AdminHistory';
 import AddCar from './pages/AddCar';
+import EditCar from './pages/EditCar';
 
 
 
@@ -36,6 +37,7 @@ function App() {
               <Route path="/admin/requests" element={<AdminRequests />} />
               <Route path="/admin/history" element={<AdminHistory />} />
               <Route path="/admin/add-car" element={<AddCar />} />
+              <Route path="/admin/edit-car/:id" element={<EditCar />} />
             </Routes>
           </main>
         </div>

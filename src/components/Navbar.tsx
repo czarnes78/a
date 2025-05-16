@@ -1,9 +1,11 @@
-
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Car, UserCircle, Phone, Home } from 'lucide-react';
+import { useAdminAuth } from '../auth/AdminAuthContext';
 
 export default function Navbar() {
+  const { isAdmin } = useAdminAuth();
+
   return (
     <nav className="bg-blue-600 text-white shadow-lg">
       <div className="max-w-7xl mx-auto px-4">
@@ -28,12 +30,22 @@ export default function Navbar() {
               <Phone className="h-5 w-5" />
               <span>Kontakt</span>
             </Link>
-            <Link 
-              to="/admin-login" 
-              className="bg-white text-blue-600 px-4 py-2 rounded-md hover:bg-blue-50 transition-colors"
-            >
-              Logowanie
-            </Link>
+
+            {isAdmin ? (
+              <Link 
+                to="/admin"
+                className="bg-white text-blue-600 px-4 py-2 rounded-md hover:bg-blue-50 transition-colors"
+              >
+                Panel administratora
+              </Link>
+            ) : (
+              <Link 
+                to="/admin-login"
+                className="bg-white text-blue-600 px-4 py-2 rounded-md hover:bg-blue-50 transition-colors"
+              >
+                Logowanie
+              </Link>
+            )}
           </div>
         </div>
       </div>

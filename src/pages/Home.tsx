@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { Car, CarSegment, CarType } from '../types';
+import { Car } from '../types';
 
 export default function Home() {
   const [cars, setCars] = useState<Car[]>([]);
-  const [segment, setSegment] = useState<CarSegment | ''>('');
-  const [type, setType] = useState<CarType | ''>('');
+  const [segments, setSegments] = useState<string[]>([]);
+  const [types, setTypes] = useState<string[]>([]);
   const [childSeat, setChildSeat] = useState(false);
+  const [selectedFeatures, setSelectedFeatures] = useState<string[]>([]);
   const [reservationHistory, setReservationHistory] = useState([]);
 
   useEffect(() => {
@@ -22,22 +23,48 @@ export default function Home() {
       .catch(err => console.error('Błąd ładowania aut:', err));
   }, []);
 
-  const filteredCars = cars.filter(car => {
-    if (segment && car.segment !== segment) return false;
-    if (type && car.type !== type) return false;
-    if (childSeat && !car.childSeat) return false;
-    return true;
-  });
-
-  const isCarReservedNow = (carId: number) => {
-  const now = new Date();
-  return reservationHistory.some(r => 
-    r.carId === carId &&
-    r.action === 'accept' &&
-    new Date(r.startDate) <= now &&
-    now <= new Date(r.endDate)
+  const handleSegmentChange = (seg: string) => {
+    setSegments(prev =>
+      prev.includes(seg) ? prev.filter(s => s !== seg) : [...prev, seg]
     );
   };
+
+  const handleTypeChange = (type: string) => {
+    setTypes(prev =>
+      prev.includes(type) ? prev.filter(t => t !== type) : [...prev, type]
+    );
+  };
+
+  const handleFeatureChange = (feature: string) => {
+    setSelectedFeatures(prev =>
+      prev.includes(feature) ? prev.filter(f => f !== feature) : [...prev, feature]
+    );
+  };
+
+  const resetFilters = () => {
+    setSegments([]);
+    setTypes([]);
+    setChildSeat(false);
+    setSelectedFeatures([]);
+  };
+
+  const isCarReservedNow = (carId: number) => {
+    const now = new Date();
+    return reservationHistory.some(r =>
+      r.carId === carId &&
+      r.action === 'accept' &&
+      new Date(r.startDate) <= now &&
+      now <= new Date(r.endDate)
+    );
+  };
+
+  const filteredCars = cars.filter(car => {
+    if (segments.length > 0 && !segments.includes(car.segment)) return false;
+    if (types.length > 0 && !types.includes(car.type)) return false;
+    if (childSeat && !car.childSeat) return false;
+    if (selectedFeatures.length > 0 && !selectedFeatures.every(f => car.features.includes(f))) return false;
+    return true;
+  });
 
   return (
     <div className="flex">
@@ -49,15 +76,15 @@ export default function Home() {
           <div>
             <h3 className="font-medium mb-3">Segment</h3>
             <div className="space-y-2">
-              {['KLASA A', 'KLASA B', 'KLASA C', 'KLASA D', 'KLASA E', 'KLASA F', 'KLASA J'].map((seg) => (
+              {['klasa a', 'klasa b', 'klasa c', 'klasa d', 'klasa e', 'klasa f', 'klasa j'].map((seg) => (
                 <label key={seg} className="flex items-center">
                   <input
                     type="checkbox"
                     className="form-checkbox h-4 w-4 text-blue-600 rounded"
-                    checked={segment === seg.toLowerCase()}
-                    onChange={() => setSegment(segment === seg.toLowerCase() ? '' : seg.toLowerCase() as CarSegment)}
+                    checked={segments.includes(seg)}
+                    onChange={() => handleSegmentChange(seg)}
                   />
-                  <span className="ml-2">{seg}</span>
+                  <span className="ml-2">{seg.toUpperCase()}</span>
                 </label>
               ))}
             </div>
@@ -66,15 +93,15 @@ export default function Home() {
           <div>
             <h3 className="font-medium mb-3">Typ nadwozia</h3>
             <div className="space-y-2">
-              {['Sedan', 'SUV', 'Hatchback', 'Kombi', 'Van'].map((t) => (
-                <label key={t} className="flex items-center">
+              {['sedan', 'suv', 'hatchback', 'kombi', 'van'].map((type) => (
+                <label key={type} className="flex items-center">
                   <input
                     type="checkbox"
                     className="form-checkbox h-4 w-4 text-blue-600 rounded"
-                    checked={type === t.toLowerCase()}
-                    onChange={() => setType(type === t.toLowerCase() ? '' : t.toLowerCase() as CarType)}
+                    checked={types.includes(type)}
+                    onChange={() => handleTypeChange(type)}
                   />
-                  <span className="ml-2">{t}</span>
+                  <span className="ml-2">{type.charAt(0).toUpperCase() + type.slice(1)}</span>
                 </label>
               ))}
             </div>
@@ -97,13 +124,21 @@ export default function Home() {
                   <input
                     type="checkbox"
                     className="form-checkbox h-4 w-4 text-blue-600 rounded"
-                    disabled
+                    checked={selectedFeatures.includes(feature)}
+                    onChange={() => handleFeatureChange(feature)}
                   />
                   <span className="ml-2">{feature}</span>
                 </label>
               ))}
             </div>
           </div>
+
+          <button
+            onClick={resetFilters}
+            className="mt-4 w-full text-sm bg-gray-100 border border-gray-300 rounded py-2 hover:bg-gray-200 transition-colors"
+          >
+            Resetuj filtry
+          </button>
 
           <div className="pt-6 border-t">
             <h3 className="font-medium mb-3">Kontakt</h3>
