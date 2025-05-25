@@ -1,5 +1,10 @@
 import React, { useState } from 'react';
 import { Phone, Mail, MapPin } from 'lucide-react';
+import ReCAPTCHA from 'react-google-recaptcha';
+
+const siteKey = ''; // << Twój klucz reCAPTCHA
+console.log('Długość siteKey:', siteKey.length);
+
 
 export default function Contact() {
   const [formData, setFormData] = useState({
@@ -7,12 +12,19 @@ export default function Contact() {
     email: '',
     phone: '',
     message: '',
+    captchaToken: '',
   });
 
   const [sending, setSending] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+
+    if (!formData.captchaToken) {
+      alert('Proszę potwierdzić, że nie jesteś robotem.');
+      return;
+    }
+
     setSending(true);
 
     try {
@@ -24,7 +36,13 @@ export default function Contact() {
 
       if (res.ok) {
         alert('Dziękujemy za wiadomość. Odpowiemy najszybciej jak to możliwe.');
-        setFormData({ name: '', email: '', phone: '', message: '' });
+        setFormData({
+          name: '',
+          email: '',
+          phone: '',
+          message: '',
+          captchaToken: '',
+        });
       } else {
         alert('Błąd podczas wysyłania wiadomości.');
       }
@@ -112,6 +130,11 @@ export default function Contact() {
                 onChange={(e) => setFormData({ ...formData, message: e.target.value })}
               ></textarea>
             </div>
+
+            <ReCAPTCHA
+              sitekey={siteKey}
+              onChange={(token) => setFormData({ ...formData, captchaToken: token || '' })}
+            />
 
             <button
               type="submit"

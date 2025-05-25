@@ -1,8 +1,12 @@
 require('dotenv').config();
+console.log('Email:', process.env.GMAIL_USER);
+console.log('Hasło:', process.env.GMAIL_PASS ? 'OK' : 'Brak');
+
 const express = require('express');
 const cors = require('cors');
 const bodyParser = require('body-parser');
 const nodemailer = require('nodemailer');
+const axios = require('axios');
 
 const app = express();
 const PORT = 4000;
@@ -720,8 +724,8 @@ let reservationHistory = [];
 const transporter = nodemailer.createTransport({
   service: 'gmail',
   auth: {
-    user: 'ticketpoczta01@gmail.com',
-    pass: 'soba bkea iaty rjeq'
+    user: process.env.GMAIL_USER,
+    pass: process.env.GMAIL_PASS
   }
 });
 
@@ -733,7 +737,7 @@ function sendDecisionEmail(email, name, carName, action) {
     : `Dzień dobry ${name},\n\nNiestety nie możemy zrealizować Twojej rezerwacji samochodu ${carName}.`;
 
   const mailOptions = {
-    from: 'twojemail@gmail.com',
+    from: process.env.GMAIL_USER,
     to: email,
     subject,
     text
@@ -825,32 +829,57 @@ app.delete('/api/reservations/history/:timestamp', (req, res) => {
   res.status(200).json({ message: 'Usunięto z historii' });
 });
 
-app.post('/api/contact', (req, res) => {
-  const { name, email, phone, message } = req.body;
+app.post('/api/contact', async (req, res) => {
+  const { name, email, phone, message, captchaToken } = req.body;
 
-  const mailOptions = {
-    from: 'ticketpoczta01@gmail.com', 
-    to: 'ticketpoczta01@gmail.com',   
-    subject: `Nowa wiadomość kontaktowa od ${name}`,
-    text: `
+  if (!captchaToken) {
+    return res.status(400).json({ message: 'Brak tokenu CAPTCHA' });
+  }
+
+  try {
+    const captchaRes = await axios.post(
+      `https://www.google.com/recaptcha/api/siteverify`,
+      null,
+      {
+        params: {
+          secret: '6Lde9EgrAAAAMk_Dm33J0-1HDd1YqXwPZPkf3LL',
+          response: captchaToken
+        }
+      }
+    );
+
+    if (!captchaRes.data.success) {
+      return res.status(403).json({ message: 'Błędna weryfikacja CAPTCHA' });
+    }
+
+    const mailOptions = {
+      from: 'ticketpoczta01@gmail.com',
+      to: 'ticketpoczta01@gmail.com',
+      subject: `Nowa wiadomość kontaktowa od ${name}`,
+      text: `
 Imię i nazwisko: ${name}
 Email: ${email}
 Telefon: ${phone}
 
 Wiadomość:
 ${message}
-    `,
-    replyTo: email
-  };
+      `,
+      replyTo: email
+    };
 
-  transporter.sendMail(mailOptions, (error, info) => {
-    if (error) {
-      console.error('Błąd przy wysyłce formularza kontaktowego:', error);
-      return res.status(500).json({ message: 'Błąd przy wysyłce wiadomości' });
-    }
-    console.log('Wiadomość kontaktowa wysłana:', info.response);
-    res.status(200).json({ message: 'Wiadomość wysłana pomyślnie' });
-  });
+    transporter.sendMail(mailOptions, (error, info) => {
+      if (error) {
+        console.error('Błąd przy wysyłce formularza kontaktowego:', error);
+        return res.status(500).json({ message: 'Błąd przy wysyłce wiadomości' });
+      }
+      console.log('Wiadomość kontaktowa wysłana:', info.response);
+      res.status(200).json({ message: 'Wiadomość wysłana pomyślnie' });
+    });
+
+  } catch (err) {
+    console.error('Błąd weryfikacji CAPTCHA:', err);
+    return res.status(500).json({ message: 'Błąd weryfikacji CAPTCHA' });
+  }
 });
 
 
