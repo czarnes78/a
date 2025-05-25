@@ -1,3 +1,4 @@
+require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
 const bodyParser = require('body-parser');
@@ -828,8 +829,8 @@ app.post('/api/contact', (req, res) => {
   const { name, email, phone, message } = req.body;
 
   const mailOptions = {
-    from: email,
-    to: 'bartekcieminski2808@gmail.com', // adres, na który chcesz otrzymywać wiadomości
+    from: 'ticketpoczta01@gmail.com', 
+    to: 'ticketpoczta01@gmail.com',   
     subject: `Nowa wiadomość kontaktowa od ${name}`,
     text: `
 Imię i nazwisko: ${name}
@@ -839,6 +840,7 @@ Telefon: ${phone}
 Wiadomość:
 ${message}
     `,
+    replyTo: email
   };
 
   transporter.sendMail(mailOptions, (error, info) => {
@@ -850,6 +852,7 @@ ${message}
     res.status(200).json({ message: 'Wiadomość wysłana pomyślnie' });
   });
 });
+
 
 
 // Start serwera
