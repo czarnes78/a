@@ -59,10 +59,12 @@ export default function Home() {
   };
 
   const filteredCars = cars.filter(car => {
-    if (segments.length > 0 && !segments.includes(car.segment)) return false;
-    if (types.length > 0 && !types.includes(car.type)) return false;
+    if (segments.length > 0 && !segments.includes(car.segment.toLowerCase())) return false;
+    if (types.length > 0 && !types.includes(car.type.toLowerCase())) return false;
     if (childSeat && !car.childSeat) return false;
-    if (selectedFeatures.length > 0 && !selectedFeatures.every(f => car.features.includes(f))) return false;
+    if (selectedFeatures.length > 0 && !selectedFeatures.every(f =>
+      car.features.some(cf => cf.toLowerCase() === f.toLowerCase())
+    )) return false;
     return true;
   });
 

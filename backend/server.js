@@ -41,7 +41,7 @@ let cars = [
   {
       id: 3,
       name: 'Hyundai i10',
-      segment: 'KLASA A',
+      segment: 'Klasa A',
       type: 'hatchback',
       image: 'https://www.autocentrum.pl/MjAyMy5qYgsgGztKGgpvH2NDb1ZUEmAMKBUoVlYQP0c3HD8KXB4jRXdNLE8MFXxddUkvSVYQfQt2GHxPAkB7WG4RNAxbFSwDbBB8SRgYJANsESwNVhkvCyISYB9UEigGKB85EFsWYFtsSWAURRhgXHYSIFQBSCYdbBYpVAdBf1lvEz0eFww',
       price: 200,
@@ -55,7 +55,7 @@ let cars = [
   {
     id: 4,
     name: 'Volkswagen up!',
-    segment: 'KLASA A',
+    segment: 'Klasa A',
     type: 'hatchback',
     image: 'https://www.autocentrum.pl/OWRkLmpwYDYzCTpeXwxtInBRbkIRFGIxOwcpQhMWPXokDj4eGRgheGcIKFlARHxlMVx4D0NCejVlXngPRE4rM3wBPApSCg',
     price: 200,
@@ -69,7 +69,7 @@ let cars = [
   {
     id: 5,
     name: 'Kia Picanto',
-    segment: 'KLASA A',
+    segment: 'Klasa A',
     type: 'hatchback',
     image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT_jeZSj0TczecTgqABLjcIFV2sa_0jspWAYQ&s',
     price: 200,
@@ -83,7 +83,7 @@ let cars = [
   {
     id: 6,
     name: 'Renault Clio',
-    segment: 'KLASA B',
+    segment: 'Klasa B',
     type: 'hatchback',
     image: 'https://dabrowscy.pl/application/files/cache/7bab62ab-cb25-4d63-bc05-d38f7e35ee0d-1744930659.webp',
     price: 250,
@@ -97,7 +97,7 @@ let cars = [
   {
     id: 7,
     name: 'Peugeot 208',
-    segment: 'KLASA B',
+    segment: 'Klasa B',
     type: 'hatchback',
     image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSeHitEahuU1YC_-72M_6We4sVpoVfYb-KQUw&s',
     price: 250,
@@ -111,7 +111,7 @@ let cars = [
   {
     id: 8,
     name: 'Opel Corsa',
-    segment: 'KLASA B',
+    segment: 'Klasa B',
     type: 'hatchback',
     image: 'https://webp-konwerter.incdn.pl/eyJmIjoiaHR0cHM6Ly9nM/i5pbmZvci5wbC9wL19maW/xlcy8yNzQwMDAvN19vcGV/sY29yc2EyOTI4NjEuanBnIn0.jpg',
     price: 250,
@@ -125,7 +125,7 @@ let cars = [
   {
     id: 9,
     name: 'Skoda Fabia',
-    segment: 'KLASA B',
+    segment: 'Klasa B',
     type: 'hatchback',
     image: 'https://i0.wp.com/wokolmotoryzacji.pl/wp-content/uploads/2020/11/skoda-fabia-2021-adelanto-diseno-202072434-1604397957-7.jpg?resize=600%2C372&ssl=1',
     price: 250,
@@ -139,7 +139,7 @@ let cars = [
   {
     id: 10,
     name: 'Seat Ibiza',
-    segment: 'KLASA B',
+    segment: 'Klasa B',
     type: 'hatchback',
     image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSbyxGTIqZdiOUUpDKYolOigXDpfiaB9_IB9Q&s',
     price: 250,
@@ -153,7 +153,7 @@ let cars = [
   {
     id: 11,
     name: 'Toyota Corolla',
-    segment: 'KLASA C',
+    segment: 'Klasa C',
     type: 'sedan',
     image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTIVB4P69lyBRt7n4qMC7pXWniLfN_tcxQpYQ&s',
     price: 300,
@@ -167,7 +167,7 @@ let cars = [
   {
     id: 12,
     name: 'Mazda 3',
-    segment: 'KLASA C',
+    segment: 'Klasa C',
     type: 'hatchback',
     image: 'https://media-assets.mazda.eu/image/upload/q_auto,f_auto/mazdapl/globalassets/cars/2024-mazda3-hatchback/mme_m3_hb_bhpmeaa_46v_46v_7-8_prime.png?rnd=49911c',
     price: 350,
@@ -181,7 +181,7 @@ let cars = [
   {
     id: 13,
     name: 'Hyundai i30',
-    segment: 'KLASA C',
+    segment: 'Klasa C',
     type: 'hatchback',
     image: 'https://www.onlineauto.com.au/dA/d475e1f5fb/fileAsset/filter/Webp/webp_q/50',
     price: 320,
@@ -195,7 +195,7 @@ let cars = [
   {
     id: 14,
     name: 'Kia Ceed',
-    segment: 'KLASA C',
+    segment: 'Klasa C',
     type: 'kombi',
     image: 'https://www.kia.com/content/dam/kwcms/kme/global/en/assets/vehicles/cd-sw/discover/kia-ceed-sportswagon-ice-my25-34-front.jpg',
     price: 340,
@@ -209,7 +209,7 @@ let cars = [
   {
     id: 15,
     name: 'Volkswagen Golf',
-    segment: 'KLASA C',
+    segment: 'Klasa C',
     type: 'hatchback',
     image: 'https://www.iihs.org/cdn-cgi/image/width=636/api/ratings/model-year-images/3170/',
     price: 350,
@@ -223,7 +223,7 @@ let cars = [
   {
     id: 16,
     name: 'Ford Focus',
-    segment: 'KLASA C',
+    segment: 'Klasa C',
     type: 'hatchback',
     image: 'https://www.autocentrum.pl/OWNiLmpwYDYvCzpeXwxtImxTbkIRFGIxJwUpQhMWPXo4DD4eGRgheHsKKV9JQnsxe155XUIWKWd2DX1fFk4sNWADPApSCg',
     price: 330,
@@ -237,7 +237,7 @@ let cars = [
   {
     id: 17,
     name: 'Honda Civic',
-    segment: 'KLASA C',
+    segment: 'Klasa C',
     type: 'sedan',
     image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTx1dtUNCDNCImmUpQWyNZo9XHCYuNK486kDA&s',
     price: 370,
@@ -251,9 +251,9 @@ let cars = [
   {
     id: 18,
     name: 'BMW 1 Series',
-    segment: 'KLASA C',
+    segment: 'Klasa C',
     type: 'hatchback',
-    image: 'https://upload.wikimedia.org/wikipedia/commons/7/7b/BMW_1_Series_F40_2.0_2019.jpg',
+    image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRGxbFyhVacVbYIZ5USIHP14EBg9SJ0G1NMPg&s',
     price: 450,
     features: ['Head-up display', 'Czujniki parkowania', 'Klimatyzacja'],
     mileage: 28000,
@@ -265,9 +265,9 @@ let cars = [
   {
     id: 19,
     name: 'Audi A3',
-    segment: 'KLASA C',
+    segment: 'Klasa C',
     type: 'sedan',
-    image: 'https://upload.wikimedia.org/wikipedia/commons/0/0d/2020_Audi_A3_Sedan.jpg',
+    image: 'https://img.chceauto.pl/audi/a3/audi-a3-sedan-4370-47741_head.jpg',
     price: 470,
     features: ['Klimatyzacja', 'Tempomat', 'Apple CarPlay'],
     mileage: 27000,
@@ -279,9 +279,9 @@ let cars = [
   {
     id: 20,
     name: 'Mercedes-Benz A-Class',
-    segment: 'KLASA C',
+    segment: 'Klasa C',
     type: 'hatchback',
-    image: 'https://upload.wikimedia.org/wikipedia/commons/9/96/Mercedes-Benz_A-Class_W177.jpg',
+    image: 'https://www.mercedes-benz.pl/content/dam/hq/passengercars/cars/a-class/hatchback-w177-fl-pi/overview/teaser/03-2023/images/mercedes-benz-a-class-w177-teaser-exterior-3302x1858-03-2023.jpg/1742299159044.jpg?im=Crop,rect=(0,0,3302,1857);Resize=(1280,720)',
     price: 500,
     features: ['Czujniki parkowania', 'Klimatyzacja', 'Apple CarPlay'],
     mileage: 30000,
@@ -293,9 +293,9 @@ let cars = [
   {
     id: 21,
     name: 'Peugeot 3008',
-    segment: 'KLASA D',
+    segment: 'Klasa D',
     type: 'SUV',
-    image: 'https://upload.wikimedia.org/wikipedia/commons/9/9d/Peugeot_3008_2021_1.5_Diesel.jpg',
+    image: 'https://visuel3d-secure.peugeot.com/V3DImage.ashx?client=CFGAP3D&mkt=PL&env=PROD&version=1PPDSYRJH7C0A0C2&ratio=1&format=jpg&quality=90&width=640&view=006&color=0MM00N7K&trim=0PW60RFX&opt1=JD02&opt2=ZHQM&back=0',
     price: 600,
     features: ['Klimatyzacja', 'Panoramiczny dach', 'System multimedialny'],
     mileage: 25000,
@@ -307,9 +307,9 @@ let cars = [
   {
     id: 22,
     name: 'Ford Kuga',
-    segment: 'KLASA D',
+    segment: 'Klasa D',
     type: 'SUV',
-    image: 'https://upload.wikimedia.org/wikipedia/commons/e/ed/2020_Ford_Kuga_1.5_TDCi.jpg',
+    image: 'https://img.chceauto.pl/ford/kuga/ford-kuga-suv-4528-50171_head.webp',
     price: 650,
     features: ['Kamera 360', 'System multimedialny', 'Tempomat'],
     mileage: 35000,
@@ -321,9 +321,9 @@ let cars = [
   {
     id: 23,
     name: 'Volkswagen Tiguan',
-    segment: 'KLASA D',
+    segment: 'Klasa D',
     type: 'SUV',
-    image: 'https://upload.wikimedia.org/wikipedia/commons/5/5a/Volkswagen_Tiguan_2020.jpg',
+    image: 'https://aaaautoeuimg.vshcdn.net/thumb/300137153_1024x768x100.jpg?35219',
     price: 700,
     features: ['Klimatyzacja', 'Apple CarPlay', 'Czujniki parkowania'],
     mileage: 28000,
@@ -335,9 +335,9 @@ let cars = [
   {
     id: 24,
     name: 'Hyundai Tucson',
-    segment: 'KLASA D',
+    segment: 'Klasa D',
     type: 'SUV',
-    image: 'https://upload.wikimedia.org/wikipedia/commons/c/c6/2022_Hyundai_Tucson_2021_1.6_Turbo.jpg',
+    image: 'https://margo.pl/wp-content/uploads/2021/04/hyundai-tucson-mistrz-wartoscii-e2e.png',
     price: 680,
     features: ['Tempomat', 'Klimatyzacja', 'Czujniki parkowania'],
     mileage: 26000,
@@ -349,9 +349,9 @@ let cars = [
   {
     id: 25,
     name: 'Toyota RAV4',
-    segment: 'KLASA D',
+    segment: 'Klasa D',
     type: 'SUV',
-    image: 'https://upload.wikimedia.org/wikipedia/commons/0/01/Toyota_RAV4_2022.jpg',
+    image: 'https://i.wpimg.pl/1280x/m.autokult.pl/toyota-rav4-pug-in-1-ee3a4943202.jpg',
     price: 750,
     features: ['Kamera 360', 'Bluetooth', 'System multimedialny'],
     mileage: 32000,
@@ -363,9 +363,9 @@ let cars = [
   {
     id: 26,
     name: 'Mazda CX-5',
-    segment: 'KLASA D',
+    segment: 'Klasa D',
     type: 'SUV',
-    image: 'https://upload.wikimedia.org/wikipedia/commons/3/3f/Mazda_CX-5_2022.jpg',
+    image: 'https://i.bstr.es/highmotor/2021/01/mazda-cx-5-2021_8.jpg',
     price: 700,
     features: ['Klimatyzacja', 'Tempomat', 'Apple CarPlay'],
     mileage: 27000,
@@ -377,7 +377,7 @@ let cars = [
   {
     id: 27,
     name: 'BMW X1',
-    segment: 'KLASA D',
+    segment: 'Klasa D',
     type: 'SUV',
     image: 'https://upload.wikimedia.org/wikipedia/commons/2/2b/BMW_X1_F48.jpg',
     price: 800,
@@ -391,9 +391,9 @@ let cars = [
   {
     id: 28,
     name: 'Audi Q3',
-    segment: 'KLASA D',
+    segment: 'Klasa D',
     type: 'SUV',
-    image: 'https://upload.wikimedia.org/wikipedia/commons/4/4b/2020_Audi_Q3_35_TDI.jpg',
+    image: 'https://cdn.wheel-size.com/automobile/body/audi-q3-2018-2025-1716280372.7106097.jpg',
     price: 850,
     features: ['Klimatyzacja', 'Czujniki parkowania', 'Apple CarPlay'],
     mileage: 24000,
@@ -405,7 +405,7 @@ let cars = [
   {
     id: 29,
     name: 'Mercedes-Benz GLA',
-    segment: 'KLASA D',
+    segment: 'Klasa D',
     type: 'SUV',
     image: 'https://upload.wikimedia.org/wikipedia/commons/6/6e/Mercedes-Benz_GLA_2020.jpg',
     price: 900,
@@ -419,7 +419,7 @@ let cars = [
   {
     id: 30,
     name: 'Range Rover Evoque',
-    segment: 'KLASA D',
+    segment: 'Klasa D',
     type: 'SUV',
     image: 'https://upload.wikimedia.org/wikipedia/commons/5/5a/Range_Rover_Evoque_2020.jpg',
     price: 950,
@@ -433,7 +433,7 @@ let cars = [
   {
     id: 31,
     name: 'Ford Mondeo',
-    segment: 'KLASA E',
+    segment: 'Klasa E',
     type: 'sedan',
     image: 'https://upload.wikimedia.org/wikipedia/commons/a/ae/Ford_Mondeo_2019.jpg',
     price: 1000,
@@ -447,7 +447,7 @@ let cars = [
   {
     id: 32,
     name: 'Volkswagen Passat',
-    segment: 'KLASA E',
+    segment: 'Klasa E',
     type: 'sedan',
     image: 'https://upload.wikimedia.org/wikipedia/commons/c/ce/Volkswagen_Passat_2020.jpg',
     price: 1050,
@@ -461,7 +461,7 @@ let cars = [
   {
     id: 33,
     name: 'Mercedes-Benz E-Class',
-    segment: 'KLASA E',
+    segment: 'Klasa E',
     type: 'sedan',
     image: 'https://upload.wikimedia.org/wikipedia/commons/e/e4/2019_Mercedes-Benz_E-Class_2.0.jpg',
     price: 1200,
@@ -475,7 +475,7 @@ let cars = [
   {
     id: 34,
     name: 'BMW 5 Series',
-    segment: 'KLASA E',
+    segment: 'Klasa E',
     type: 'sedan',
     image: 'https://upload.wikimedia.org/wikipedia/commons/e/ec/BMW_5_Series_G30_2021.jpg',
     price: 1300,
@@ -489,7 +489,7 @@ let cars = [
   {
     id: 35,
     name: 'Audi A6',
-    segment: 'KLASA E',
+    segment: 'Klasa E',
     type: 'sedan',
     image: 'https://upload.wikimedia.org/wikipedia/commons/f/f6/2020_Audi_A6_Sedan.jpg',
     price: 1350,
@@ -503,7 +503,7 @@ let cars = [
   {
     id: 36,
     name: 'Jaguar XF',
-    segment: 'KLASA E',
+    segment: 'Klasa E',
     type: 'sedan',
     image: 'https://upload.wikimedia.org/wikipedia/commons/0/09/Jaguar_XF_2019.jpg',
     price: 1400,
@@ -517,7 +517,7 @@ let cars = [
   {
     id: 37,
     name: 'Lexus ES',
-    segment: 'KLASA E',
+    segment: 'Klasa E',
     type: 'sedan',
     image: 'https://upload.wikimedia.org/wikipedia/commons/c/cf/2019_Lexus_ES_300h_4th_generation.jpg',
     price: 1500,
@@ -531,7 +531,7 @@ let cars = [
   {
     id: 38,
     name: 'Tesla Model 3',
-    segment: 'KLASA F',
+    segment: 'Klasa F',
     type: 'sedan',
     image: 'https://upload.wikimedia.org/wikipedia/commons/0/09/Tesla_Model_3_2021.jpg',
     price: 2500,
@@ -545,7 +545,7 @@ let cars = [
   {
     id: 39,
     name: 'Porsche Panamera',
-    segment: 'KLASA F',
+    segment: 'Klasa F',
     type: 'sedan',
     image: 'https://upload.wikimedia.org/wikipedia/commons/f/f9/2021_Porsche_Panamera.jpg',
     price: 3000,
@@ -559,7 +559,7 @@ let cars = [
   {
     id: 40,
     name: 'BMW 7 Series',
-    segment: 'KLASA F',
+    segment: 'Klasa F',
     type: 'sedan',
     image: 'https://upload.wikimedia.org/wikipedia/commons/4/4b/2020_BMW_7_Series.jpg',
     price: 3500,
@@ -573,7 +573,7 @@ let cars = [
   {
     id: 41,
     name: 'Rolls-Royce Phantom',
-    segment: 'KLASA G',
+    segment: 'Klasa G',
     type: 'sedan',
     image: 'https://upload.wikimedia.org/wikipedia/commons/2/2b/Rolls-Royce_Phantom_2019.jpg',
     price: 10000,
@@ -587,7 +587,7 @@ let cars = [
   {
     id: 42,
     name: 'Bentley Continental GT',
-    segment: 'KLASA G',
+    segment: 'Klasa G',
     type: 'coupe',
     image: 'https://upload.wikimedia.org/wikipedia/commons/5/52/2019_Bentley_Continental_GT.jpg',
     price: 12000,
@@ -601,7 +601,7 @@ let cars = [
   {
     id: 43,
     name: 'Aston Martin DB11',
-    segment: 'KLASA G',
+    segment: 'Klasa G',
     type: 'coupe',
     image: 'https://upload.wikimedia.org/wikipedia/commons/a/ab/2019_Aston_Martin_DB11.jpg',
     price: 15000,
@@ -615,7 +615,7 @@ let cars = [
   {
     id: 44,
     name: 'Ferrari Roma',
-    segment: 'KLASA G',
+    segment: 'Klasa G',
     type: 'coupe',
     image: 'https://upload.wikimedia.org/wikipedia/commons/9/91/Ferrari_Roma.jpg',
     price: 20000,
@@ -629,7 +629,7 @@ let cars = [
   {
     id: 45,
     name: 'McLaren GT',
-    segment: 'KLASA G',
+    segment: 'Klasa G',
     type: 'coupe',
     image: 'https://upload.wikimedia.org/wikipedia/commons/e/e9/2020_McLaren_GT.jpg',
     price: 25000,
@@ -643,7 +643,7 @@ let cars = [
   {
     id: 46,
     name: 'Lamborghini Huracan',
-    segment: 'KLASA G',
+    segment: 'Klasa G',
     type: 'coupe',
     image: 'https://upload.wikimedia.org/wikipedia/commons/4/48/Lamborghini_Huracan_Evo.jpg',
     price: 30000,
@@ -657,7 +657,7 @@ let cars = [
   {
     id: 47,
     name: 'Bugatti Chiron',
-    segment: 'KLASA G',
+    segment: 'Klasa G',
     type: 'coupe',
     image: 'https://upload.wikimedia.org/wikipedia/commons/a/a3/Bugatti_Chiron_2.jpg',
     price: 35000,
@@ -671,7 +671,7 @@ let cars = [
   {
     id: 48,
     name: 'Pagani Huayra',
-    segment: 'KLASA G',
+    segment: 'Klasa G',
     type: 'coupe',
     image: 'https://upload.wikimedia.org/wikipedia/commons/6/68/Pagani_Huayra_2012.jpg',
     price: 40000,
@@ -685,7 +685,7 @@ let cars = [
   {
     id: 49,
     name: 'Koenigsegg Jesko',
-    segment: 'KLASA G',
+    segment: 'Klasa G',
     type: 'coupe',
     image: 'https://upload.wikimedia.org/wikipedia/commons/8/83/Koenigsegg_Jesko_2020.jpg',
     price: 45000,
@@ -699,7 +699,7 @@ let cars = [
   {
     id: 50,
     name: 'McLaren Speedtail',
-    segment: 'KLASA G',
+    segment: 'Klasa G',
     type: 'coupe',
     image: 'https://upload.wikimedia.org/wikipedia/commons/f/fe/2020_McLaren_Speedtail.jpg',
     price: 50000,
