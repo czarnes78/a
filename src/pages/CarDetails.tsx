@@ -171,6 +171,7 @@ export default function CarDetails() {
                     name="startDate"
                     value={startDate}
                     onChange={(e) => setStartDate(e.target.value)}
+                    min={new Date().toISOString().split('T')[0]}
                     className="mt-1 block w-full rounded-md border-gray-300 shadow-sm"
                   />
                 </div>
@@ -184,6 +185,7 @@ export default function CarDetails() {
                     name="endDate"
                     value={endDate}
                     onChange={(e) => setEndDate(e.target.value)}
+                    min={startDate || new Date().toISOString().split('T')[0]}
                     className="mt-1 block w-full rounded-md border-gray-300 shadow-sm"
                   />
                 </div>

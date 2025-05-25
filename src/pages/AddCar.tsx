@@ -13,6 +13,7 @@ export default function AddCar() {
     description: '',
     price: '',
     image: '',
+    fileImage: null as File | null,
   });
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
@@ -127,6 +128,19 @@ export default function AddCar() {
         <div>
           <label className="block font-medium mb-1">Link do zdjęcia</label>
           <input name="image" value={formData.image} onChange={handleChange} className="w-full border rounded p-2" />
+        </div>
+        <div>
+          <label className="block font-medium mb-1">Lub załaduj zdjęcie z dysku</label>
+          <input
+            type="file"
+            accept="image/*"
+            onChange={(e) => {
+              if (e.target.files && e.target.files.length > 0) {
+                setFormData(prev => ({ ...prev, fileImage: e.target.files![0] }));
+              }
+            }}
+            className="w-full border rounded p-2"
+          />
         </div>
         <div className="text-right">
           <button type="submit" className="bg-blue-600 text-white px-6 py-2 rounded hover:bg-blue-700">
