@@ -842,7 +842,7 @@ app.post('/api/contact', async (req, res) => {
       null,
       {
         params: {
-          secret: '6Lde9EgrAAAAMk_Dm33J0-1HDd1YqXwPZPkf3LL',
+          secret: process.env.RECAPTCHA_SECRET_KEY,
           response: captchaToken
         }
       }

@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Phone, Mail, MapPin } from 'lucide-react';
 import ReCAPTCHA from 'react-google-recaptcha';
 
-const siteKey = ''; // << Twój klucz reCAPTCHA
+const siteKey = import.meta.env.VITE_RECAPTCHA_SITE_KEY; // << Twój klucz reCAPTCHA
 console.log('Długość siteKey:', siteKey.length);
 
 
