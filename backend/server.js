@@ -724,8 +724,8 @@ let reservationHistory = [];
 const transporter = nodemailer.createTransport({
   service: 'gmail',
   auth: {
-    user: process.env.GMAIL_USER,
-    pass: process.env.GMAIL_PASS
+    user: 'ticketpoczta01@gmail.com',
+    pass: 'soba bkea iaty rjeq'
   }
 });
 
@@ -842,7 +842,7 @@ app.post('/api/contact', async (req, res) => {
       null,
       {
         params: {
-          secret: process.env.RECAPTCHA_SECRET_KEY,
+          secret: '6Lde9EgrAAAAMk_Dm33J0-1HDd1YqXwPZPkf3LL',
           response: captchaToken
         }
       }

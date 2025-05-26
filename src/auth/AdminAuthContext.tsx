@@ -21,7 +21,7 @@ export const AdminAuthProvider = ({ children }: { children: ReactNode }) => {
   }, []);
 
   const login = (password: string) => {
-    if (password === import.meta.env.VITE_ADMIN_PASSWORD) {
+    if (password === 'admin123') {
       setIsAdmin(true);
       localStorage.setItem('isAdmin', 'true'); // 🔐 zapisz do localStorage
       return true;
