@@ -23,7 +23,11 @@ export default function EditCar() {
   const featureOptions = ['Nawigacja GPS', 'Automatyczna skrzynia', 'Bluetooth', 'Bagażnik dachowy'];
 
   useEffect(() => {
+<<<<<<< HEAD
     fetch(`http://localhost:4000/api/cars/${id}`)
+=======
+    fetch(`/api/cars/${id}`)
+>>>>>>> 416abc3 (Wersja projektu oddana, zaliczona)
       .then(res => res.json())
       .then(data => {
         setFormData({
@@ -65,7 +69,11 @@ export default function EditCar() {
       price: Number(formData.price),
     };
 
+<<<<<<< HEAD
     const res = await fetch(`http://localhost:4000/api/cars/${id}`, {
+=======
+    const res = await fetch(`/api/cars/${id}`, {
+>>>>>>> 416abc3 (Wersja projektu oddana, zaliczona)
       method: 'PUT',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(updatedCar),
@@ -81,7 +89,11 @@ export default function EditCar() {
 
   const handleDelete = async () => {
     if (!window.confirm('Czy na pewno chcesz usunąć ten samochód?')) return;
+<<<<<<< HEAD
     const res = await fetch(`http://localhost:4000/api/cars/${id}`, {
+=======
+    const res = await fetch(`/api/cars/${id}`, {
+>>>>>>> 416abc3 (Wersja projektu oddana, zaliczona)
       method: 'DELETE',
     });
 

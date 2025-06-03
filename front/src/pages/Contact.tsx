@@ -5,8 +5,12 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 
+<<<<<<< HEAD
 const siteKey = import.meta.env.VITE_RECAPTCHA_SITE_KEY; 
 
+=======
+const siteKey = import.meta.env.VITE_RECAPTCHA_SITE_KEY;
+>>>>>>> 416abc3 (Wersja projektu oddana, zaliczona)
 
 // Define validation schema with Yup
 const schema = yup
@@ -58,9 +62,20 @@ export default function Contact() {
     setSending(true);
 
     try {
+<<<<<<< HEAD
       const res = await fetch("http://localhost:4000/api/contact", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
+=======
+      const token = localStorage.getItem('adminToken'); // ⭐ Pobierz JWT
+
+      const res = await fetch("/api/contact", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${token}`, // ⭐ Dodaj nagłówek Authorization
+        },
+>>>>>>> 416abc3 (Wersja projektu oddana, zaliczona)
         body: JSON.stringify({
           ...data,
           captchaToken,

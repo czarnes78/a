@@ -16,14 +16,22 @@ export default function AdminRequests() {
   const [requests, setRequests] = useState<Request[]>([]);
 
   useEffect(() => {
+<<<<<<< HEAD
     fetch('http://localhost:4000/api/reservations')
+=======
+    fetch("/api/reservations")
+>>>>>>> 416abc3 (Wersja projektu oddana, zaliczona)
       .then((res) => res.json())
       .then((data) => setRequests(data))
       .catch((err) => console.error('Błąd ładowania zapytań:', err));
   }, []);
 
   const archiveRequest = async (req: Request, action: 'accept' | 'reject') => {
+<<<<<<< HEAD
     await fetch('http://localhost:4000/api/reservations/archive', {
+=======
+    await fetch("/api/reservations/archive", {
+>>>>>>> 416abc3 (Wersja projektu oddana, zaliczona)
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({

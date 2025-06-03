@@ -17,6 +17,7 @@ export default function AdminHistory() {
   const [requests, setRequests] = useState<Request[]>([]);
 
   useEffect(() => {
+<<<<<<< HEAD
     fetch('http://localhost:4000/api/reservations/history')
       .then((res) => res.json())
       .then((data) => setRequests(data))
@@ -26,6 +27,52 @@ export default function AdminHistory() {
   const handleDelete = (timestamp: string) => {
     fetch(`http://localhost:4000/api/reservations/history/${timestamp}`, {
       method: 'DELETE',
+=======
+    const token = localStorage.getItem('adminToken');
+    if (!token) {
+      console.warn('Brak JWT w localStorage.');
+      return;
+    }
+
+    fetch("/api/reservations/history", {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem('adminToken') || ''}`
+      }
+    })
+      .then((res) => {
+        if (!res.ok) {
+          console.warn("Brak uprawnień (JWT nieprawidłowy?)");
+          return [];
+        }
+        return res.json();
+      })
+      .then((data) => {
+        if (!Array.isArray(data)) {
+          console.warn("Dane historii nie są tablicą");
+          setRequests([]);
+        } else {
+          setRequests(data);
+        }
+      })
+      .catch((err) => {
+        console.error("Błąd historii:", err);
+        setRequests([]);
+      });
+  }, []);
+
+  const handleDelete = (timestamp: string) => {
+    const token = localStorage.getItem('adminToken');
+    if (!token) {
+      alert('Brak tokenu (musisz się zalogować ponownie)');
+      return;
+    }
+
+    fetch(`/api/reservations/history/${timestamp}`, {
+      method: 'DELETE',
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+>>>>>>> 416abc3 (Wersja projektu oddana, zaliczona)
     })
       .then((res) => {
         if (res.ok) {

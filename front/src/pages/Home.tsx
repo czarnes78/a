@@ -2,7 +2,10 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Car } from '../types';
 
+<<<<<<< HEAD
 // ✅ Typ rezerwacji, żeby naprawić błędy TS
+=======
+>>>>>>> 416abc3 (Wersja projektu oddana, zaliczona)
 type Reservation = {
   carId: number;
   action: string;
@@ -16,6 +19,7 @@ export default function Home() {
   const [types, setTypes] = useState<string[]>([]);
   const [childSeat, setChildSeat] = useState(false);
   const [selectedFeatures, setSelectedFeatures] = useState<string[]>([]);
+<<<<<<< HEAD
   const [reservationHistory, setReservationHistory] = useState<Reservation[]>([]); // 🛠️ naprawiony typ
 
   useEffect(() => {
@@ -26,6 +30,65 @@ export default function Home() {
 
   useEffect(() => {
     fetch('http://localhost:4000/api/cars')
+=======
+  const [reservationHistory, setReservationHistory] = useState<Reservation[]>([]);
+
+  // 🚀 Mechanizm automatycznego odświeżania JWT co 55 minut
+  useEffect(() => {
+    const fetchToken = () => {
+      fetch("/api/test-jwt")
+        .then(res => res.json())
+        .then(data => {
+          console.log("Nowy token:", data.token);
+          localStorage.setItem('adminToken', data.token);
+        })
+        .catch(err => console.error("Błąd pobierania nowego JWT:", err));
+    };
+
+    // Pierwsze pobranie po załadowaniu komponentu
+    fetchToken();
+
+    // Ustaw co 55 minut odświeżanie tokena
+    const interval = setInterval(() => {
+      fetchToken();
+    }, 55 * 60 * 1000);
+
+    return () => clearInterval(interval);
+  }, []);
+
+  useEffect(() => {
+    const token = localStorage.getItem('adminToken');
+
+    fetch("/api/reservations/history", {
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    })
+      .then((res) => {
+        if (!res.ok) {
+          console.warn("Brak uprawnień do historii (JWT?)");
+          return [];
+        }
+        return res.json();
+      })
+      .then((data) => {
+        console.log("Dane historii w Home:", data);
+        if (!Array.isArray(data)) {
+          console.warn("Dane historii nie są tablicą");
+          setReservationHistory([]);
+        } else {
+          setReservationHistory(data);
+        }
+      })
+      .catch((err) => {
+        console.error("Błąd historii:", err);
+        setReservationHistory([]);
+      });
+  }, []);
+
+  useEffect(() => {
+    fetch("/api/cars")
+>>>>>>> 416abc3 (Wersja projektu oddana, zaliczona)
       .then(res => res.json())
       .then(data => setCars(data))
       .catch(err => console.error('Błąd ładowania aut:', err));
@@ -58,6 +121,13 @@ export default function Home() {
 
   const isCarReservedNow = (carId: number) => {
     const now = new Date();
+<<<<<<< HEAD
+=======
+    if (!Array.isArray(reservationHistory)) {
+      console.warn('Brak poprawnej historii rezerwacji:', reservationHistory);
+      return false;
+    }
+>>>>>>> 416abc3 (Wersja projektu oddana, zaliczona)
     return reservationHistory.some(r =>
       r.carId === carId &&
       r.action === 'accept' &&
@@ -80,7 +150,10 @@ export default function Home() {
     <div className="flex">
       <div className="w-72 bg-white rounded-lg shadow-md p-6 h-fit sticky top-4">
         <h2 className="text-xl font-semibold mb-6">Filtry</h2>
+<<<<<<< HEAD
 
+=======
+>>>>>>> 416abc3 (Wersja projektu oddana, zaliczona)
         <div className="space-y-6">
           <div>
             <h3 className="font-medium mb-3">Segment</h3>

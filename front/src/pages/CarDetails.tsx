@@ -20,7 +20,11 @@ export default function CarDetails() {
   });
 
   useEffect(() => {
+<<<<<<< HEAD
     fetch(`http://localhost:4000/api/cars/${id}`)
+=======
+    fetch(`/api/cars/${id}`)
+>>>>>>> 416abc3 (Wersja projektu oddana, zaliczona)
       .then(res => res.json())
       .then(data => setCar(data))
       .catch(err => console.error('Błąd pobierania auta:', err));
@@ -38,7 +42,11 @@ export default function CarDetails() {
     };
 
     try {
+<<<<<<< HEAD
       await fetch('http://localhost:4000/api/reservations', {
+=======
+      await fetch("/api/reservations", {
+>>>>>>> 416abc3 (Wersja projektu oddana, zaliczona)
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(newRequest)

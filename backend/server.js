@@ -1,6 +1,7 @@
 require("dotenv").config();
 
 const express = require("express");
+<<<<<<< HEAD
 const cors = require("cors");
 const bodyParser = require("body-parser");
 const nodemailer = require("nodemailer");
@@ -12,6 +13,78 @@ const PORT = 4000;
 app.use(cors());
 app.use(bodyParser.json());
 
+=======
+const cors = require('cors');
+const bodyParser = require("body-parser");
+const nodemailer = require("nodemailer");
+const axios = require("axios");
+const rateLimit = require('express-rate-limit'); // ⬅️ Dodane
+const jwt = require('jsonwebtoken');
+const helmet = require('helmet');
+
+const app = express();
+
+// Ustaw CSP
+app.use(
+  helmet.contentSecurityPolicy({
+    directives: {
+      defaultSrc: ["'self'"],
+      scriptSrc: ["'self'", "https://www.google.com", "https://www.gstatic.com", "'unsafe-inline'"],
+      styleSrc: ["'self'", "https://fonts.googleapis.com", "'unsafe-inline'"],
+      imgSrc: ["'self'", "data:", "https://api.pgd.pl", "https://spots.ag", "https://cdn-icons-png.flaticon.com"],
+      connectSrc: ["'self'", "https://www.google.com", "https://www.gstatic.com"],
+      fontSrc: ["'self'", "https://fonts.gstatic.com"],
+      frameSrc: ["'self'", "https://www.google.com"],
+      objectSrc: ["'none'"],
+      upgradeInsecureRequests: [],
+    },
+  })
+);
+
+// Rate limiting
+const limiter = rateLimit({
+  windowMs: 60 * 60 * 1000, // 1 godzina
+  max: 250, // 250 requestów na godzinę
+  message: 'Zbyt wiele żądań z tego adresu IP, spróbuj ponownie za godzinę.'
+});
+app.use(limiter);
+
+// Cors i inne middleware
+app.use(cors({
+  origin: ['https://d25swaqypznmn6.cloudfront.net'],
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type']
+}));
+app.use(bodyParser.json());
+
+app.get("/debug", (req, res) => {
+  res.json({ reservationHistory, reservations });
+});
+
+app.use((req, res, next) => {
+  const authHeader = req.headers['authorization'];
+  const token = authHeader && authHeader.split(' ')[1];
+
+  if (token) {
+    try {
+      const decoded = jwt.verify(token, process.env.JWT_SECRET || 'defaultsecret');
+      console.log('Odczytano JWT:', decoded);
+    } catch (err) {
+      console.warn('Niepoprawny JWT (ale ignoruję)', err.message);
+    }
+  }
+  
+  next();
+});
+
+app.get("/api/test-jwt", (req, res) => {
+  const payload = { user: "admin", role: "admin" };
+  const token = jwt.sign(payload, process.env.JWT_SECRET || 'defaultsecret', { expiresIn: '1h' });
+  res.json({ token });
+});
+
+
+>>>>>>> 416abc3 (Wersja projektu oddana, zaliczona)
 let cars = [
   {
     id: 1,
@@ -879,9 +952,31 @@ app.post("/api/reservations/archive", (req, res) => {
 });
 
 app.get("/api/reservations/history", (req, res) => {
+<<<<<<< HEAD
   res.json(reservationHistory);
 });
 
+=======
+  const authHeader = req.headers['authorization'];
+  const token = authHeader && authHeader.split(' ')[1];
+
+  if (!token) {
+    console.warn('Brak tokenu JWT');
+    return res.status(401).json({ message: "Brak tokenu JWT" });
+  }
+
+  try {
+    const decoded = jwt.verify(token, process.env.JWT_SECRET || 'defaultsecret');
+    console.log('Dostęp do historii – JWT OK:', decoded);
+    res.json(reservationHistory); // tu zwracamy faktyczną historię
+  } catch (err) {
+    console.warn('Niepoprawny JWT w historii:', err.message);
+    return res.status(403).json({ message: "Nieprawidłowy token JWT" });
+  }
+});
+
+
+>>>>>>> 416abc3 (Wersja projektu oddana, zaliczona)
 app.delete("/api/reservations/history/:timestamp", (req, res) => {
   const timestamp = req.params.timestamp;
   reservationHistory = reservationHistory.filter(
@@ -945,6 +1040,17 @@ ${message}
 });
 
 // Start serwera
+<<<<<<< HEAD
 app.listen(PORT, () => {
   console.log(`Serwer działa na http://localhost:${PORT}`);
 });
+=======
+const PORT = process.env.PORT || 4000;
+app.listen(PORT, () => {
+  console.log(`Serwer działa na http://localhost:${PORT}`);
+});
+
+app.get("/", (req, res) => {
+  res.send("🚗 MBM Rent backend is running.");
+});
+>>>>>>> 416abc3 (Wersja projektu oddana, zaliczona)

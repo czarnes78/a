@@ -65,7 +65,11 @@ export default function AddCar() {
       price: Number(formData.price),
     };
 
+<<<<<<< HEAD
     const res = await fetch('http://localhost:4000/api/cars', {
+=======
+    const res = await fetch("/api/cars", {
+>>>>>>> 416abc3 (Wersja projektu oddana, zaliczona)
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(newCar),
